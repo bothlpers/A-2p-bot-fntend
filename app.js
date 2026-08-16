@@ -1,4 +1,4 @@
-const RENDER_BACKEND_URL = "https://aliza-td-final-bot-ejin.onrender.com";
+const RENDER_BACKEND_URL = "https://aliza-trade-bot-2-step.onrender.com";
 
 document.addEventListener("DOMContentLoaded", () => {
     
