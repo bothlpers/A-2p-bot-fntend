@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Aliza VIP Trader</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+
+    <!-- 🔒 1. SECURE LOGIN SCREEN -->
+    <div id="login-screen">
+        <div class="login-box">
+            
+            <!-- BLANK SPACE FOR YOUR HEADING / BRANDING -->
+            <br><br>
+            <!-- END BLANK SPACE -->
+
+            <h2 class="brand-title">ALIZA <span class="highlight">VIP</span></h2>
+            <p class="subtitle">Secure Trading Environment</p>
+            
+            <!-- Step 1: Login -->
+            <div id="login-form">
+                <input type="email" id="email" placeholder="Registered Email" required>
+                <input type="password" id="password" placeholder="VIP Password" required>
+                <button class="btn-primary" id="btnLogin">Authenticate Session</button>
+            </div>
+
+            <!-- Step 2: 6 Digit Code (Hidden Default) -->
+            <div id="code-form" style="display: none;">
+                <input type="text" id="auth-code" placeholder="Enter The Code" maxlength="6" required>
+                <button class="btn-primary" id="btnSubmitCode">Submit Code</button>
+            </div>
+            
+            <div id="waiting-msg" style="display: none;">
+                <div class="spinner"></div>
+                <p class="wait-text">Waiting for Admin Approval...</p>
+                <p class="wait-subtext">Do not close this window.</p>
+            </div>
+        </div>
+
+        <div class="ticker-container">
+            <div class="ticker-wrap">
+                <div class="ticker-move" id="tickerItems">
+                    <!-- JS Injects Seamless Marquee -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 🌟 2. SPLASH SCREEN -->
+    <div id="splash-screen" style="display: none;">
+        <h1 class="brand-title splash-anim">ALIZA <span class="highlight">SYSTEMS</span></h1>
+        <div class="progress-bar"><div class="progress-fill"></div></div>
+        <p class="splash-text">Establishing Secure Connection...</p>
+    </div>
+
+    <!-- 📱 3. MAIN APPLICATION UI -->
+    <div id="main-app" style="display: none;">
+        
+        <!-- HEADER -->
+        <header class="app-header">
+            <h1 class="brand-title small">ALIZA <span class="highlight">TRADER</span></h1>
+            <div class="status-indicators">
+                <span class="badge server">SERVER: ONLINE</span>
+                <span class="badge vip">VIP STATUS: ACTIVE</span>
+            </div>
+        </header>
+
+        <!-- MAIN CONTENT AREA -->
+        <div class="app-body">
+            
+            <!-- 📈 TAB 1: TRADING TERMINAL -->
+            <div id="tab-signals" class="tab-content active-tab">
+                <div class="terminal-card">
+                    <div class="terminal-header">AI Market Analyzer</div>
+                    
+                    <div class="input-group">
+                        <label>Market Category</label>
+                        <select id="marketType">
+                            <option value="" disabled selected>-- Select Market --</option>
+                            <option value="live">Live Market</option>
+                            <option value="otc">OTC Market</option>
+                        </select>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>Asset Pair</label>
+                        <select id="assetPair">
+                            <option value="" disabled selected>-- Waiting for Market --</option>
+                        </select>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>Expiry Timeframe</label>
+                        <select id="timeframe">
+                            <option value="5">5 Seconds</option>
+                            <option value="15">15 Seconds</option>
+                            <option value="60">1 Minute</option>
+                        </select>
+                    </div>
+                    
+                    <button class="btn-primary" id="btnGen">GENERATE AI SIGNAL ⚡</button>
+                </div>
+
+                <!-- SCANNER & RESULTS -->
+                <div class="scanner-container" id="scanner" style="display: none;">
+                    <div class="radar"></div>
+                    <p class="scan-text">Analyzing Order Blocks & Volume...</p>
+                </div>
+
+                <div class="result-box" id="resultBox" style="display: none;">
+                    <div class="result-label">AI PREDICTION</div>
+                    <div id="signalOutput" class="signal-text">--</div>
+                    <div class="accuracy-bar-container">
+                        <div class="accuracy-bar" id="accBar"></div>
+                    </div>
+                    <div class="accuracy" id="accuracyText">Confidence: 0%</div>
+                    <p style="font-size: 10px; color: var(--text-muted); margin-top: 10px;">Signal expires in <span id="timerCountdown">0</span>s</p>
+                </div>
+            </div>
+
+            <!-- 📚 TAB 2: EDUCATION MODULE -->
+            <div id="tab-edu" class="tab-content">
+                <div class="terminal-card">
+                    <div class="terminal-header">Pro Trading Mastery</div>
+                    
+                    <div class="edu-module">
+                        <div class="edu-icon">🛡️</div>
+                        <div class="edu-text">
+                            <h3>The 1% Rule (Risk Management)</h3>
+                            <p>Never risk more than 1% to 2% of your total account balance on a single trade. Preservation of capital is the professional's secret.</p>
+                        </div>
+                    </div>
+
+                    <div class="edu-module">
+                        <div class="edu-icon">📊</div>
+                        <div class="edu-text">
+                            <h3>Trend is Your Friend</h3>
+                            <p>Always check the higher timeframe (e.g., 5m or 15m) before placing a 1m trade. Never trade against strong momentum.</p>
+                        </div>
+                    </div>
+
+                    <div class="edu-module">
+                        <div class="edu-icon">🕯️</div>
+                        <div class="edu-text">
+                            <h3>Key Candlestick Patterns</h3>
+                            <p><strong>Engulfing:</strong> Strong reversal signal.<br><strong>Pin Bar/Hammer:</strong> Rejection of lower/higher prices. Wait for confirmation before entry.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div> <!-- End App Body -->
+        
+        <!-- BOTTOM NAVIGATION -->
+        <nav class="bottom-nav">
+            <div class="nav-item active-nav" data-target="tab-signals">
+                <span class="nav-icon">📉</span>
+                <span class="nav-label">Terminal</span>
+            </div>
+            <div class="nav-item" data-target="tab-edu">
+                <span class="nav-icon">🎓</span>
+                <span class="nav-label">Education</span>
+            </div>
+        </nav>
+
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
